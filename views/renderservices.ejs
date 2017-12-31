@@ -11,16 +11,16 @@
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <!-- Custom Theme files -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //Custom Theme files -->
 <!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
+<link href="../css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <!-- js -->
-<script src="js/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown --> 
 <!-- //js -->  
 <!-- web fonts --> 
@@ -74,7 +74,7 @@
 	</div>
 
 <div class="container">
-	<% if (error && error.length > 0){ %>
+    <% if (error && error.length > 0){ %>
         <div class = "alert alert-danger">
           <%= error %>
         </div>
@@ -86,17 +86,31 @@
       <% } %>
 </div>	
 
+<div class="jumbotron">
+	<div class = "container">
+		<h3 class="display-3">How Can we be of service to you regarding <%= subitem.name %></h3>
+	</div>
 
-<% item.subitems.forEach(function(subitem){ %>	
-	<a href = "/services<%= item._id %>/subitem<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
-	<br/>
-<% if(currentUser&&(currentUser.id== admin )){ %>
-	<a href="/addissuestoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Issues</a>
-	<br />
-<% } %> 	
+</div>
 
+<div class = "container">
+	<div class = "well">
+		<form onsubmit="myfunc();">
+			<% subitem.issues.forEach(function(issues){ %>
+				<input type="checkbox" >
+				<label><%= issues.issue %></label>
+				<br />
+			<% }) %>
+			<br />
+			<input type="submit" class = "btn btn-success">			
+		</form>		
+	</div>	
+</div>
 
-<% }) %>
-
+<script type="text/javascript">
+	function myfunc(){
+		alert("This will show registered service providers")
+	}
+</script>
 </body>
 </html>	

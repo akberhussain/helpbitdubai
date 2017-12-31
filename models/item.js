@@ -1,5 +1,23 @@
 var mongoose = require ("mongoose");
 
+// Creating Issues Schema
+
+var issuesSchema = new mongoose.Schema({
+    issue: String
+})
+
+var Issues = mongoose.model("Issue", issuesSchema)
+// Creating Subitem Schema
+var subitemSchema = new mongoose.Schema({
+    name: String,
+    issues: [issuesSchema]
+})
+
+var Subitem = mongoose.model("Subitem", subitemSchema);
+
+
+    // Crreating Item Schema
+
 var itemSchema = new mongoose.Schema({    
     servicename: String,
     itemtype: String,
@@ -13,14 +31,15 @@ var itemSchema = new mongoose.Schema({
 
     //   }
     // }
-    subitems: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref : "Subitem"
-        }
-    ],
+    subitems: [subitemSchema],
+    issues: [issuesSchema]  
 
 
 });
+var Item = mongoose.model("Item", itemSchema);
 
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = {
+    Item : Item,
+    Subitem : Subitem,
+    Issues : Issues
+}

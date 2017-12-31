@@ -7,9 +7,13 @@ var okrabyte = require("okrabyte");
 var tesseract = require('node-tesseract');
 var middleware = require('../middleware/index');
 var User = require("../models/user")
-var Item = require("../models/item")
+var Item = require("../models/item").Item;
+var Subitem = require("../models/item").Subitem;
+var Issues = require("../models/item").Issues;
 
-var nodemailer = require('nodemailer');
+// import {Item, Subitem} from '../models/item';
+
+// var nodemailer = require('nodemailer');
 
 
 // Passport authentication
@@ -166,9 +170,10 @@ router.get("/addsubitemto:id", middleware.checkIfAdmin, function(req, res){
     })
 })
 
+
 // Adding sub item
 
-router.post("/addsubitemto:id", function(req, res){
+router.post("/addsubitemto:id", middleware.checkIfAdmin, function(req, res){
     Item.findById(req.params.id, function(err, item){
 
         var subitem = req.body.subitem;
@@ -176,12 +181,105 @@ router.post("/addsubitemto:id", function(req, res){
         if(err){
             console.log(err);
         } else{
-            item.subitem.name = subitem;
-            item.save();    
-            req.flash("success", subitem + "added to " + item.servicename );
-            res.redirect("back");          
+            
+            Subitem.create({name: subitem}, function(err, subitem){
+                if(err){
+                    console.log(err);
+                } else{
+                    item.subitems.push(subitem);
+                    item.save(function(err, item){
+                        if(err){
+                            req.flash("error", "An unexpexted error occured while adding "+ subitem)
+                        } else{            
+                            req.flash("success", subitem.name + " added to " + item.servicename );
+                            res.redirect("/");          
+                        }
+                    });
+                }
+            });
+    
         }
 
+    })
+});
+
+    // Show Subitems Page
+
+router.get("/service:id", function(req, res){
+    Item.findById(req.params.id, function(err, item){
+        res.render("subitems", {item: item})
+    });
+});
+    
+    // Show Related add Issue form
+
+router.get("/addissuestoitem:itemId/:subitemId", middleware.checkIfAdmin, function(req, res){
+
+    Item.findById(req.params.itemId, function(err, item){
+        if(err){
+            res.redirect("back");
+            req.flash("error", "Something went wrong, Please try again later");
+        } else{
+            Subitem.findById(req.params.subitemId, function(err, subitem){
+                if(err){
+                    console.log(err);
+                } else{
+                    res.render("addissues", {subitem: subitem, item: item});
+                }
+            });            
+        }
+
+    });
+});
+
+//  Add Issues to Sub Items
+
+router.post("/addissuesto:itemId/subitem:subitemId", middleware.checkIfAdmin, function(req, res){
+    
+    var myissue = req.body.myissue;
+
+    Item.findById(req.params.itemId, function(err, item){
+        if(err){
+            req.flash("error", "Can not find item you are looking for !!!");
+            res.redirect("back");
+        } else{
+            Subitem.findById(req.params.subitemId, function(err, subitem){
+                if(err){
+                    req.flash("error", "Issue can not be added to this item. Try Later !!!");
+                    res.redirect("back");
+                } else{
+                    Issues.create({issue: myissue}, function(err, issue){
+                        if(err){
+                            console.log(err);
+                        } else{
+                            subitem.issues.push(issue);
+                            subitem.save();
+                            req.flash("success", "Issue added to " + subitem.name);                            
+                            res.redirect("back");
+                        }
+                    })
+                }
+            })
+        }
+    })
+});
+
+
+router.get("/services:itemId/subitem:subitemId", function(req, res){
+    Item.findById(req.params.itemId, function(err, item){
+        if(err){
+            req.flash("error", "This item does't exist or has been shifted !!");
+            res.redirect("back");
+        } else{
+            Subitem.findById(req.params.subitemId, function(err, subitem){
+                if(err){
+                    req.flash("error", "This item does't exist or has been shifted !!");
+                    res.redirect("back");      
+                } else{
+                    res.render("renderservices", {item: item, subitem: subitem});
+                }
+            })
+        }
     })
 });
 

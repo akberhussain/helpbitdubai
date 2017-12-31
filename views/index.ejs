@@ -293,7 +293,7 @@
 								<% items.forEach(function(item){ %>		
 							<% if(item.itemtype==='electronics'){ %>
 								<div class="col-md-3 agile_ecommerce_tab_left">
-									<div class="hs-wrapper">
+									<!-- <div class="hs-wrapper">
 										<img src="<%= item.url %>" alt=" " class="img-responsive" />
 										<img src="<%= item.url %>" alt=" " class="img-responsive" />
 										<img src="<%= item.url %>" alt=" " class="img-responsive" />
@@ -309,14 +309,62 @@
 												</li>
 											</ul>
 										</div>
-									</div> 
-									<h5><a href="/"><%= item.servicename %></a></h5>
+									</div>  -->
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
 									<% if(currentUser&&(currentUser.id== admin )){ %>
-										<div class="simpleCart_shelfItem">
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
 										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
-										  <a href="" class="w3ls-cart btn btn-default btn-xs">Generate form here</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
 										</div>
-					                <% } %>
+					                <% } %>						               
+						            </div>
+
+<!-- 									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %> -->
 								</div>						
 								<% } %>
 							<% }) %>	
@@ -330,34 +378,41 @@
 
 								<% items.forEach(function(item){ %>		
 							<% if(item.itemtype==='fashion'){ %>
-								<div class="col-md-4 agile_ecommerce_tab_left">
-									<div class="hs-wrapper">
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<img src="<%= item.url %>" alt=" " class="img-responsive" />
-										<div class="w3_hs_bottom">
-											<ul>
-												<li>
-													<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-												</li>
-											</ul>
-										</div>
-									</div> 
-									<h5><a href="/"><%= item.servicename %></a></h5>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
 									<% if(currentUser&&(currentUser.id== admin )){ %>
-										<div class="simpleCart_shelfItem">
-										  <a href="/<%= item._id%>" class="w3ls-cart btn btn-default">Add Subitem</a>
-										  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
 										</div>
-					                <% } %>
+					                <% } %>						               
+						            </div>
+
 								</div>						
 								<% } %>
-							<% }) %>	
+							<% }) %>
 							
 							</div>
 						</div>
@@ -367,36 +422,46 @@
 			<div role="tabpanel" class="tab-pane fade" id="home" aria-labelledby="home-tab">
 				<div class="agile_ecommerce_tabs">
 
-					<% items.forEach(function(item){ %>		
-				<% if(item.itemtype==='home'){ %>
-					<div class="col-md-4 agile_ecommerce_tab_left">
-						<div class="hs-wrapper">
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<img src="<%= item.url %>" alt=" " class="img-responsive" />
-							<div class="w3_hs_bottom">
-								<ul>
-									<li>
-										<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-									</li>
-								</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='home'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
 							</div>
-						</div> 
-						<h5><a href="/"><%= item.servicename %></a></h5>
-				<% if(currentUser&&(currentUser.id== admin )){ %>
-					<div class="simpleCart_shelfItem">
-					  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-					  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-					</div>
-                <% } %>
-			</div>						
-					<% } %>
-			<% }) %>	
+						</div>
 				
 	</div>
 </div>
@@ -406,36 +471,46 @@
 		<div role="tabpanel" class="tab-pane fade" id="beauty" aria-labelledby="beauty-tab">
 			<div class="agile_ecommerce_tabs">
 
-				<% items.forEach(function(item){ %>		
-			<% if(item.itemtype==='beauty'){ %>
-				<div class="col-md-4 agile_ecommerce_tab_left">
-					<div class="hs-wrapper">
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<div class="w3_hs_bottom">
-							<ul>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-								</li>
-							</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='beauty'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
 						</div>
-					</div> 
-					<h5><a href="/"><%= item.servicename %></a></h5>
-					<% if(currentUser&&(currentUser.id== admin )){ %>
-						<div class="simpleCart_shelfItem">
-						  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-						  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-						</div>
-	                <% } %>
-				</div>						
-				<% } %>
-			<% }) %>	
 			
 			</div>
 		</div>
@@ -446,36 +521,46 @@
 		<div role="tabpanel" class="tab-pane fade" id="automotive" aria-labelledby="automotive-tab">
 			<div class="agile_ecommerce_tabs">
 
-				<% items.forEach(function(item){ %>		
-			<% if(item.itemtype==='automotive'){ %>
-				<div class="col-md-4 agile_ecommerce_tab_left">
-					<div class="hs-wrapper">
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<div class="w3_hs_bottom">
-							<ul>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-								</li>
-							</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='automotive'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
 						</div>
-					</div> 
-					<h5><a href="/"><%= item.servicename %></a></h5>
-					<% if(currentUser&&(currentUser.id== admin )){ %>
-						<div class="simpleCart_shelfItem">
-						  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-						  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-						</div>
-	                <% } %>
-				</div>						
-				<% } %>
-			<% }) %>	
 			
 			</div>
 		</div>
@@ -485,36 +570,46 @@
 		<div role="tabpanel" class="tab-pane fade" id="storage" aria-labelledby="storage-tab">
 			<div class="agile_ecommerce_tabs">
 
-				<% items.forEach(function(item){ %>		
-			<% if(item.itemtype==='storage'){ %>
-				<div class="col-md-4 agile_ecommerce_tab_left">
-					<div class="hs-wrapper">
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<div class="w3_hs_bottom">
-							<ul>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-								</li>
-							</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='storage'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
 						</div>
-					</div> 
-					<h5><a href="/"><%= item.servicename %></a></h5>
-					<% if(currentUser&&(currentUser.id== admin )){ %>
-						<div class="simpleCart_shelfItem">
-						  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-						  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-						</div>
-	                <% } %>
-				</div>						
-				<% } %>
-			<% }) %>	
 			
 			</div>
 		</div>
@@ -523,36 +618,46 @@
 	<div role="tabpanel" class="tab-pane fade" id="fitness" aria-labelledby="fitness-tab">
 		<div class="agile_ecommerce_tabs">
 
-			<% items.forEach(function(item){ %>		
-		<% if(item.itemtype==='fitness'){ %>
-			<div class="col-md-4 agile_ecommerce_tab_left">
-				<div class="hs-wrapper">
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<img src="<%= item.url %>" alt=" " class="img-responsive" />
-					<div class="w3_hs_bottom">
-						<ul>
-							<li>
-								<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-							</li>
-						</ul>
-					</div>
-				</div> 
-				<h5><a href="/"><%= item.servicename %></a></h5>
-				<% if(currentUser&&(currentUser.id== admin )){ %>
-					<div class="simpleCart_shelfItem">
-					  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-					  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-					</div>
-                <% } %>
-			</div>						
-			<% } %>
-		<% }) %>	
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='fitness'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
+						</div>
 		
 		</div>
 	</div>
@@ -562,36 +667,46 @@
 		<div role="tabpanel" class="tab-pane fade" id="moving" aria-labelledby="moving-tab">
 			<div class="agile_ecommerce_tabs">
 
-				<% items.forEach(function(item){ %>		
-			<% if(item.itemtype==='moving'){ %>
-				<div class="col-md-4 agile_ecommerce_tab_left">
-					<div class="hs-wrapper">
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<div class="w3_hs_bottom">
-							<ul>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-								</li>
-							</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='moving'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
 						</div>
-					</div> 
-					<h5><a href="/"><%= item.servicename %></a></h5>
-					<% if(currentUser&&(currentUser.id== admin )){ %>
-						<div class="simpleCart_shelfItem">
-						  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-						  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-						</div>
-	                <% } %>
-				</div>						
-				<% } %>
-			<% }) %>	
 			
 			</div>
 		</div>	
@@ -602,36 +717,46 @@
 		<div role="tabpanel" class="tab-pane fade" id="petcare" aria-labelledby="petcare-tab">
 			<div class="agile_ecommerce_tabs">
 
-				<% items.forEach(function(item){ %>		
-			<% if(item.itemtype==='petcare'){ %>
-				<div class="col-md-4 agile_ecommerce_tab_left">
-					<div class="hs-wrapper">
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<img src="<%= item.url %>" alt=" " class="img-responsive" />
-						<div class="w3_hs_bottom">
-							<ul>
-								<li>
-									<a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-								</li>
-							</ul>
+								<% items.forEach(function(item){ %>		
+							<% if(item.itemtype==='petcare'){ %>
+								<div class="col-md-3 agile_ecommerce_tab_left">
+									<div class = "thumbnail spthumbnail">
+						                <img src = "<%= item.url %>">
+						                    <div class="caption">
+						            			<h5><a href="/service<%= item._id %>"><%= item.servicename %></a></h5>            
+						                    </div>
+									
+									<% if(currentUser&&(currentUser.id== admin )){ %>
+										<div class="simpleCart_shelfItem">	
+
+										<% if(item.subitems.length>=1){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+										<% } %>
+
+										<% if(item.subitems.length<=0){ %>	
+										  <a href="/addsubitemto<%= item._id %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+										  <a href="/url" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+										<% } %>
+
+										<% if(item.issues.length>=1){ %>	
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+										  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+										<% } %>
+
+										</div>
+					                <% } %>						               
+						            </div>
+
+								</div>						
+								<% } %>
+							<% }) %>
+							
+							</div>
 						</div>
-					</div> 
-					<h5><a href="/"><%= item.servicename %></a></h5>
-					<% if(currentUser&&(currentUser.id== admin )){ %>
-						<div class="simpleCart_shelfItem">
-						  <a href="" class="w3ls-cart btn btn-default">Add Subitem</a>
-						  <a href="" class="w3ls-cart btn btn-default">Generate form here</a>
-						</div>
-	                <% } %>
-				</div>						
-				<% } %>
-			<% }) %>	
 			
 			</div>
 		</div>		

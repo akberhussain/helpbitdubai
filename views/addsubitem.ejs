@@ -73,6 +73,18 @@
 		</div>
 	</div>
 	<!-- /Navigation -->
+<div class="container">
+    <% if (error && error.length > 0){ %>
+        <div class = "alert alert-danger">
+          <%= error %>
+        </div>
+      <% } %>
+      <% if (success && success.length > 0){ %>      
+        <div class = "alert alert-success">
+          <%= success %>
+        </div>
+      <% } %>
+</div>
 
 <div class="jumbotron">
 	<div class = "container">
@@ -96,27 +108,6 @@
                                     	<div class="text-center">
                                             <h3 class="display-3">About Subitem</h3>
                                         </div>
-                                <!-- <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group has-feedback">
-                                            <select class = "form-control" name = "itemtype" required="">
-                                                <option value="" selected disabled hidden>Add service to</option>
-                                                <option value = "electronics" >Electronics</option>
-                                                <option value = "fashion" >Fashion</option>
-                                                <option value = "home" >Home</option>
-                                                <option value = "beauty" >Beauty</option>
-                                                <option value = "automotive" >Automotive</option>
-                                                <option value = "storage" >Storage</option>
-                                                <option value = "fitness" >Fitness</option>
-                                                <option value = "moving" >Moving</option>
-                                                <option value = "petcare" >Pet Care</option>
-                                            </select>
-                                            <div class="form-control-feedback">
-                                            </div>
-                                        </div>
-
-                                    </div>            
-                                </div> -->
 
                                         <div class="row">
                                             <div class="col-md-12">
@@ -129,37 +120,6 @@
 
                                         </div>
 
-                                        <!-- <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group has-feedback">
-                                                    <input type="text" class="form-control" placeholder="Image Url" name = "url" required>
-                                                    <div class="form-control-feedback">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
- -->
-                                        
- <!-- <script type="text/javascript">
- 	 function selectfunc(){
-		var e = document.getElementById("select");
-		var value = e.options[e.selectedIndex].value;
-		var addHere = document.getElementById('placeHere');
-		var panelBody =  document.getElementById('panelBody');
-		var panelBody2 =  document.getElementById('panelBody2');
-		// alert(value);
-		if(value==='yes'){
-			addHere.innerHTML = '<input type = "text"  class="form-control" placeholder="Name of Subitem" name = "subitemName" required />'
-			panelBody.innerHTML = '<div class="row" id = "inactive"><div class="col-md-12"><div class="form-group has-feedback" id = "">1. <input type = "text"  class="form-control" placeholder="Issue a service provider can resolve" name = "issue1" required /><div class="form-control-feedback"></div></div></div></div><div class="row" id = "inactive"><div class="col-md-12"><div class="form-group has-feedback" id = "">2. <input type = "text"  class="form-control" placeholder="Issue a service provider can resolve" name = "issue2" required /><div class="form-control-feedback"></div></div></div></div>'
-			
-		} else if(value==='no'){
-			addHere.innerHTML = ''
-			panelBody.innerHTML = '<div class="row" id = "inactive"><div class="col-md-12"><div class="form-group has-feedback" id = "">1. <input type = "text"  class="form-control" placeholder="Issue a service provider can resolve with main service" name = "issue1" required /><div class="form-control-feedback"></div></div></div></div><div class="row" id = "inactive"><div class="col-md-12"><div class="form-group has-feedback" id = "">2. <input type = "text"  class="form-control" placeholder="Issue a service provider can resolve with main service" name = "issue2" required /><div class="form-control-feedback"></div></div></div></div>'
-		}
-
- 	 };
-
-</script> -->
                                         <div class="text-right">
                                             <button type="submit" class="btn bg-teal-400 btn-labeled btn-labeled-right ml-10"><b><i class="icon-plus3"></i></b> Add above Subitem</button>
                                         </div>

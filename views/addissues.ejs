@@ -11,17 +11,17 @@
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <!-- Custom Theme files -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //Custom Theme files -->
 <!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
+<link href="../css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <!-- js -->
-<script src="js/jquery.min.js"></script>
-<link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown --> 
+<script src="../js/jquery.min.js"></script>
+<link rel="stylesheet" href="../css/jquery.countdown.css" /> <!-- countdown --> 
 <!-- //js -->  
 <!-- web fonts --> 
 <link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'>
@@ -84,19 +84,19 @@
           <%= success %>
         </div>
       <% } %>
-</div>	
+</div>
 
 
-<% item.subitems.forEach(function(subitem){ %>	
-	<a href = "/services<%= item._id %>/subitem<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
-	<br/>
-<% if(currentUser&&(currentUser.id== admin )){ %>
-	<a href="/addissuestoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Issues</a>
-	<br />
-<% } %> 	
+<!-- Adding Issue to Sub Item -->
 
+<form method = "post" action = "/addissuesto<%= item._id %>/subitem<%= subitem._id %>" style = "margin-top: 20px;">
 
-<% }) %>
+  <div class="form-group">
+    <input type="text" name = "myissue" class="form-control" style = "width : 600px;" placeholder="Add Issue to <%= subitem.name %>">
+  </div>
+  <button type="submit" class="btn btn-primary">Add Issue</button>
+
+</form>
 
 </body>
 </html>	
