@@ -10,6 +10,7 @@ var User = require("../models/user")
 var Item = require("../models/item").Item;
 var Subitem = require("../models/item").Subitem;
 var Issues = require("../models/item").Issues;
+var Serviceprovider = require("../models/serviceprovider");
 
 // import {Item, Subitem} from '../models/item';
 
@@ -176,13 +177,20 @@ router.get("/addsubitemto:id", middleware.checkIfAdmin, function(req, res){
 router.post("/addsubitemto:id", middleware.checkIfAdmin, function(req, res){
     Item.findById(req.params.id, function(err, item){
 
-        var subitem = req.body.subitem;
-
+        var name = req.body.subitem;
+        var myitem = {
+            itemid : item._id,
+            itemname: item.servicename
+        };
+        var obj = {
+            name: name,
+            item: myitem
+        };
         if(err){
             console.log(err);
         } else{
             
-            Subitem.create({name: subitem}, function(err, subitem){
+            Subitem.create(obj, function(err, subitem){
                 if(err){
                     console.log(err);
                 } else{
@@ -264,6 +272,7 @@ router.post("/addissuesto:itemId/subitem:subitemId", middleware.checkIfAdmin, fu
     })
 });
 
+//  Show issues on subitem
 
 router.get("/services:itemId/subitem:subitemId", function(req, res){
     Item.findById(req.params.itemId, function(err, item){
@@ -283,5 +292,30 @@ router.get("/services:itemId/subitem:subitemId", function(req, res){
     })
 });
 
+
+// ======================== Serviceprovider Form ===========================
+
+router.get("/becomeserviceprovider", function(req, res){
+    res.render("serviceproviderform");
+});
+
+// ======================= Middle stage to choose services ==================
+
+router.post("/becomeserviceprovider", function(req, res){
+    var username = req.body.email;
+    var password = req.body.password;
+    var companyname = req.body.companyname;
+    var servicetype = req.body.servicetype;
+    Item.find({}, function(err, items){
+        // console.log(items);
+        // if(item.subitems.length>0){
+            // Subitem.find({}, function(err, subitem){
+
+            // })
+            res.render("chooseservices", {items: items, servicetype: servicetype});            
+        // }
+        // res.redirect("back");
+    });
+})
 
 module.exports = router;

@@ -10,6 +10,13 @@ var Issues = mongoose.model("Issue", issuesSchema)
 // Creating Subitem Schema
 var subitemSchema = new mongoose.Schema({
     name: String,
+    item: {
+       itemid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item'
+       },
+       itemname: String  
+    },
     issues: [issuesSchema]
 })
 

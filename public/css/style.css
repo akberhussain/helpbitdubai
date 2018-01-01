@@ -160,6 +160,10 @@ label.icon-search span {
     padding: .6em;
 }
 /*-- //search --*/
+
+.spanchor{
+    color: black;
+}
 .box_1 {
 	float: right;
 	margin-top: 10px;
