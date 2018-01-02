@@ -11,6 +11,8 @@ var Item = require("../models/item").Item;
 var Subitem = require("../models/item").Subitem;
 var Issues = require("../models/item").Issues;
 var Serviceprovider = require("../models/serviceprovider");
+var Serviceproviderrequest = require("../models/serviceproviderrequest");
+
 
 // import {Item, Subitem} from '../models/item';
 
@@ -299,23 +301,80 @@ router.get("/becomeserviceprovider", function(req, res){
     res.render("serviceproviderform");
 });
 
-// ======================= Middle stage to choose services ==================
+// =========================Send request to admin =========================
 
-router.post("/becomeserviceprovider", function(req, res){
+
+router.post("/serviceproviderrequest", function(req, res){
+    
     var username = req.body.email;
     var password = req.body.password;
     var companyname = req.body.companyname;
     var servicetype = req.body.servicetype;
-    Item.find({}, function(err, items){
-        // console.log(items);
-        // if(item.subitems.length>0){
-            // Subitem.find({}, function(err, subitem){
+    var ownername = req.body.firstname + " " + req.body.lastname;
+    var location = req.body.location;
+    var cnic = req.body.cnic;
 
-            // })
-            res.render("chooseservices", {items: items, servicetype: servicetype});            
-        // }
-        // res.redirect("back");
-    });
-})
+    var obj = {
+        username : username,
+        password: password,
+        companyname: companyname,
+        servicetype: servicetype,
+        ownername: ownername,
+        location: location,
+        cnic : cnic
+    }
+
+    Serviceproviderrequest.create(obj, function(err, request){
+        if(err){
+            console.log(err)
+            req.flash("error", err)
+            res.redirect("back");
+        } else{
+            req.flash("success", "Your account will be shortly created once verified by admin. You'll be notified on Email Address Stay connected!! ");
+            res.redirect("/");
+        }
+    })
+
+});
+
+
+// ========================Show Requests to Admin ===========================
+
+router.get("/requests", middleware.checkIfAdmin, function(req, res){
+    Serviceproviderrequest.find({}, function(err, requests){
+        res.render("requests", {requests: requests});
+    })
+});
+
+
+
+// ======================= Middle stage to choose services ==================
+
+// router.post("/becomeserviceprovider", function(req, res){
+//     var username = req.body.email;
+//     var password = req.body.password;
+//     var companyname = req.body.companyname;
+//     var servicetype = req.body.servicetype;
+//     Item.find({itemtype: servicetype}, function(err, items){
+//         // console.log(items);
+//         // if(item.subitems.length>0){
+//             // Subitem.find({}, function(err, subitem){
+
+//             // })
+//             res.render("chooseservices", {items: items, servicetype: servicetype});            
+//         // }
+//         // res.redirect("back");
+//     });
+// })
+
+// router.get("/showall:name", function(req, res){
+//     Item.find({itemtype: req.params.name}, function(err, items){
+//         if(err){
+//             console.log(err);
+//         } else{
+//             res.send(items);
+//         }
+//     });
+// });
 
 module.exports = router;

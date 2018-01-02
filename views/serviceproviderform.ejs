@@ -59,6 +59,8 @@
 						<li><a href="/">Home</a></li>
 						 <% if(currentUser&&(currentUser.id== admin )){ %>
 								<li><a href="/additems">Add Items</a></li>
+								<li><a href="/requests">Requests</a></li>
+
 			                <% } %> 
 							<%  if(currentUser){ %>
 								<div class="nav navbar-nav navbar-right">
@@ -98,7 +100,7 @@
 	        <div class="row">                                        
 	        <div class="col-lg-12">
 	                    <!-- Registration form -->
-                    <form action="/becomeserviceprovider" method = "post">
+                    <form action="/serviceproviderrequest" method = "post">
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-3">
                                 <div class="panel registration-form">
@@ -125,6 +127,26 @@
                                             </div>                                            
 
                                         </div>
+<!-- ===================================== -->
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="First Name" name = "firstname" required>
+                                                    <div class="form-control-feedback">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="Last Name" name = "lastname" required>
+                                                    <div class="form-control-feedback">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- ====================== -->
 
                                         <div class="row">
                                             <div class="col-md-12">
@@ -134,7 +156,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="Company Location" name = "location" required>
+                                                    <div class="form-control-feedback">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>       
                                         <div class="row">
 		                                    <div class="col-md-12">
 		                                        <div class="form-group has-feedback">
@@ -156,6 +187,24 @@
 
 		                                    </div>
                                             
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <input type="text" class="form-control" placeholder="Your CNIC" name = "cnic" required>
+                                                    <div class="form-control-feedback">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <input type="submit" class="form-control btn btn-primary btn-block" value="Signup Here" />
+                                                    <div class="form-control-feedback">
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>    
 
 <!--                                             <div class="col-md-6">
@@ -168,9 +217,9 @@
 
                                       <!--   </div> -->
 
-                                        <div class="text-right">
+<!--                                         <div class="text-right">
                                             <button type="submit" class="btn btn-primary"><b><i class="icon-plus3"></i></b>Signup</button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

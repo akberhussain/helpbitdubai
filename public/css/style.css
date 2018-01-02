@@ -446,13 +446,14 @@ ul.multi-column-dropdown h6 {
     background: none;
 }
 .navbar-nav > li > a {
-    padding: 29px 18px 0;
+    padding: 20px 12px 0;
 }
+/*============================= HERE ========================*/
 .navbar-nav > li > a {
-    padding: 20px 30px;
+    padding: 20px 15px;
     font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color:#ff5063;

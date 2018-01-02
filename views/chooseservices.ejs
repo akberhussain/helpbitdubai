@@ -58,7 +58,9 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
 						 <% if(currentUser&&(currentUser.id== admin )){ %>
-								<li><a href="/additems" class="act">Add Items</a></li>
+								<li><a href="/additems" class="">Add Items</a></li>
+								<li><a href="/requests">Requests</a></li>
+
 			                <% } %> 
 							<%  if(currentUser){ %>
 								<div class="nav navbar-nav navbar-right">
@@ -89,14 +91,30 @@
 <div class="jumbotron">
 	<div class = "container">
         <h3 class = "display-3">We Currently deal with following services in <%= servicetype %> </h3>
-        <% items.forEach(function(item){ %>
-<!--            <% item.subitems.forEach(function(subitem){ %> 
-                <p><%= subitem.servicename %></p>
-            <% }) %> -->
-            <p><%= item.servicename %></p>
-        <% }) %>
 	</div>  
 </div>
+
+<div class="container">
+	<div class = "jumbotron">
+        <% if(items.length>0){ %>
+        <form>	
+        	<% items.forEach(function(item){ %>
+	            <input type="checkbox" />
+	            <label><%= item.servicename %></label>
+	            <br/>
+
+	        <% }) %>
+	    </form>    
+    	<% } %>
+
+        <% if(items.length===0){ %>
+        	<h4 class = "display-3">We are sorry services are currently unavailable in <%= servicetype %> </h4>
+        <% } %>
+
+	</div>  
+</div>
+
+        
 
 </body>
 </html>	

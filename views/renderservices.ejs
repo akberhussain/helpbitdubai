@@ -95,15 +95,24 @@
 
 <div class = "container">
 	<div class = "well">
-		<form onsubmit="myfunc();">
-			<% subitem.issues.forEach(function(issues){ %>
-				<input type="checkbox" >
-				<label><%= issues.issue %></label>
+		<% if(subitem.issues.length>0){ %>
+			<form onsubmit="myfunc();">
+				<% subitem.issues.forEach(function(issues){ %>
+					<input type="checkbox" >
+					<label><%= issues.issue %></label>
+					<br />
+				<% }) %>
 				<br />
-			<% }) %>
-			<br />
-			<input type="submit" class = "btn btn-success">			
-		</form>		
+
+					<input type="submit" class = "btn btn-success">			
+			</form>
+		<% } %>
+
+		<% if(subitem.issues.length===0){ %>
+
+			<h4>We are currently not solving issues regarding <%= subitem.name %></h4>
+
+		<% } %>		
 	</div>	
 </div>
 

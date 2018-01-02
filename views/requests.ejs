@@ -11,17 +11,17 @@
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <!-- Custom Theme files -->
-<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //Custom Theme files -->
 <!-- font-awesome icons -->
-<link href="../css/font-awesome.css" rel="stylesheet"> 
+<link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <!-- js -->
-<script src="../js/jquery.min.js"></script>
-<link rel="stylesheet" href="../css/jquery.countdown.css" /> <!-- countdown --> 
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown --> 
 <!-- //js -->  
 <!-- web fonts --> 
 <link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'>
@@ -37,6 +37,15 @@
 	});
 </script>
 <!-- //end-smooth-scrolling --> 
+
+<style type="text/css">
+    html{
+        background-color: #eee;
+    }
+    body{
+        background-color: #eee;
+    }
+</style>
 </head> 
 <body>
 	<!-- for bootstrap working -->
@@ -58,9 +67,8 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
 						 <% if(currentUser&&(currentUser.id== admin )){ %>
-								<li><a href="/additems">Add Items</a></li>
-								<li><a href="/requests">Requests</a></li>
-
+                                <li><a href="/additems">Add Items</a></li>
+								<li><a href="/requests" class = "act">Requests</a></li>
 			                <% } %> 
 							<%  if(currentUser){ %>
 								<div class="nav navbar-nav navbar-right">
@@ -86,19 +94,19 @@
           <%= success %>
         </div>
       <% } %>
-</div>
+</div>	
+    
+<% requests.forEach(function(request){ %>
+    
 
 
-<!-- Adding Issue to Sub Item -->
+<% }) %>
 
-<form method = "post" action = "/addissuesto<%= item._id %>/subitem<%= subitem._id %>" style = "margin-top: 20px;">
-
-  <div class="form-group">
-    <input type="text" name = "myissue" class="form-control" style = "width : 600px;" placeholder="Add Issue to <%= subitem.name %>">
-  </div>
-  <button type="submit" class="btn btn-primary">Add Issue</button>
-
-</form>
+    <div style="margin: 5% 20% 0% 20%; background-color: white">
+        <h3 class = "container">
+            Page in Progress
+        </h3>
+    </div>
 
 </body>
 </html>	
