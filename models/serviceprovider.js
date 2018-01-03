@@ -1,4 +1,6 @@
 var mongoose = require ("mongoose");
+var bcrypt = require("bcrypt-nodejs");
+var passportLocalMongoose = require("passport-local-mongoose");
 
 var serviceproviderSchema = new mongoose.Schema({
 
@@ -69,5 +71,24 @@ var serviceproviderSchema = new mongoose.Schema({
 	// }]
 
 });
+
+serviceproviderSchema.pre('save',function(next){
+  var serviceprovider = this;
+     if (!serviceprovider.isModified('password')) return next();
+      bcrypt.genSalt(10,function(err,salt){
+    
+    if(err) return next(err);
+    bcrypt.hash(serviceprovider.password,salt,null,function(err,hash){
+      if(err) return next(err)
+      serviceprovider.password = hash;
+      next();
+    })
+  })
+});
+  
+serviceproviderSchema.methods.comparePassword = function(password){
+    return bcrypt.compareSync(password,this.password);
+    //Return either True or False
+}
 
 module.exports =  mongoose.model("Serviceprovider", serviceproviderSchema);

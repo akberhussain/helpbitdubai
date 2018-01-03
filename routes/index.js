@@ -12,6 +12,7 @@ var Subitem = require("../models/item").Subitem;
 var Issues = require("../models/item").Issues;
 var Serviceprovider = require("../models/serviceprovider");
 var Serviceproviderrequest = require("../models/serviceproviderrequest");
+var nodemailer = require("nodemailer");
 
 
 // import {Item, Subitem} from '../models/item';
@@ -23,6 +24,19 @@ var Serviceproviderrequest = require("../models/serviceproviderrequest");
 
 passport.use('user',new localStrategy(function(username, password, done){
     User.findOne({username:username},function(err,user){
+        if(err) return done(err);
+        if(!user){
+            return done(null,false);
+        }
+        if(!user.comparePassword(password)){
+            return done(null,false);
+        }
+        return done(null,user);
+    });
+}));
+
+passport.use('serviceprovider',new localStrategy(function(username, password, done){
+    Serviceprovider.findOne({username:username},function(err,user){
         if(err) return done(err);
         if(!user){
             return done(null,false);
@@ -54,9 +68,21 @@ passport.deserializeUser(function(id,done){
         }
         
         else{ 
-	            console.log("User Not Found");
-	            req.flash("error", "User Not Found")    
-	            res.redirect("/");            
+            Serviceprovider.findById(id,function(err,user){
+        
+            if(err) return done(err);
+            
+            if(user){
+                done(null,user);
+            }
+            
+            else{
+                console.log("User Not Found");
+                req.flash("error", "User Not Found")    
+                res.redirect("/");
+            }
+        })
+                            
         }
     })
     
@@ -134,14 +160,22 @@ router.get("/logout", function(req, res) {
     
 });
 
-// authenticating User
+// ============================== User Login =========================
 
 router.post('/login',passport.authenticate('user',{failureRedirect:'/'}),(req,res) => {
       res.redirect('/');
 })
 
+// ====================== Service Provider Login ==========================
 
-// showing add Items route to admin
+router.post('/loginserviceprovider', passport.authenticate('serviceprovider',{failureRedirect:'/'}),(req,res) => {
+  req.flash("success", "Service Provider Logged In ");    
+  res.redirect('/');
+})
+
+
+
+// =================== showing add Items route to admin ====================
 
 router.get("/additems", middleware.checkIfAdmin, function(req, res){
 	res.render("additems");
@@ -324,16 +358,51 @@ router.post("/serviceproviderrequest", function(req, res){
         cnic : cnic
     }
 
-    Serviceproviderrequest.create(obj, function(err, request){
-        if(err){
-            console.log(err)
-            req.flash("error", err)
-            res.redirect("back");
-        } else{
-            req.flash("success", "Your account will be shortly created once verified by admin. You'll be notified on Email Address Stay connected!! ");
-            res.redirect("/");
-        }
-    })
+        var a;
+
+          Serviceprovider.find({}, function(err, serviceproviders){
+            
+            for(i = 0; i<serviceproviders.length; i++){
+                 if(serviceproviders[i].username == username){
+                    a = true;
+                    break;
+                 } 
+            }
+                  if(a){
+                    req.flash("error", "Serviceprovider already exists with this Email");
+                    res.redirect("back");
+                  }
+                    if(!a){
+                        // User.find({}, function(err, users){
+                        //     for(var i=0; i<users.length; i++){
+                        //         if(users[i].email === )
+                        //     }
+                        // })
+                    Serviceproviderrequest.create(obj, function(err, request){
+                        if(err){
+                            console.log(err)
+                            req.flash("error", err)
+                            res.redirect("back");
+                        } else{
+                            req.flash("success", "Your account will be shortly created once verified by admin. You'll be notified on Email Address Stay connected!! ");
+                            res.redirect("/");
+                        }
+                    })                      
+                }
+
+          });
+
+
+    // Serviceproviderrequest.create(obj, function(err, request){
+    //     if(err){
+    //         console.log(err)
+    //         req.flash("error", err)
+    //         res.redirect("back");
+    //     } else{
+    //         req.flash("success", "Your account will be shortly created once verified by admin. You'll be notified on Email Address Stay connected!! ");
+    //         res.redirect("/");
+    //     }
+    // })
 
 });
 
@@ -348,7 +417,109 @@ router.get("/requests", middleware.checkIfAdmin, function(req, res){
 
 
 
-// ======================= Middle stage to choose services ==================
+// ========================== ADD Service Provider
+
+router.post("/acceptserviceprovider:id", function(req, res){
+
+	var myid = req.params.id;
+
+	Serviceproviderrequest.findById(req.params.id, function(err, serviceprovider){
+		var newServiceprovider = Serviceprovider();
+
+		newServiceprovider.username = serviceprovider.username;
+		newServiceprovider.password = serviceprovider.password;
+		newServiceprovider.ownername = serviceprovider.ownername;
+		newServiceprovider.location = serviceprovider.location;
+		newServiceprovider.servicetype = serviceprovider.servicetype;
+		newServiceprovider.cnic = serviceprovider.cnic;
+		newServiceprovider.companyname = serviceprovider.companyname;
+
+	    var a;
+
+	      Serviceprovider.find({}, function(err, serviceproviders){
+	        
+	        for(i = 0; i<serviceproviders.length; i++){
+	             if(serviceproviders[i].username == newServiceprovider.username){
+	                a = true;
+	                break;
+	             } 
+	        }
+	              if(a){
+	                req.flash("error", "Serviceprovider already exists with this Email");
+	                res.redirect("back");
+	              }
+	                   if(!a){
+	                      newServiceprovider.save((err,user) => {
+	                      if(err){console.error("Error: ", err)}
+	                      else{
+	                        var nodemailer = require('nodemailer');
+
+	                        var transporter = nodemailer.createTransport({
+	                          service: 'gmail',
+	                          auth: {
+	                            user: 'help.helpbitdubai@gmail.com',
+	                            pass: '123abc..'
+	                          }
+	                        });
+// '"Fred Foo 👻" <foo@blurdybloop.com>'
+	                        var mailOptions = {
+	                          from: '"Helpbit Dubai" <help.helpbitdubai@gmail.com>',
+	                          to: newServiceprovider.username,
+	                          subject: 'Helpbit Acount Confirmation',
+	                          text: 'Your Account was successfully created at Helpbit kindly visit https://secure-lowlands-28937.herokuapp.com/ to login to your account '
+	                        };
+
+	                        transporter.sendMail(mailOptions, function(error, info){
+	                          if (error) {
+	                            console.log(error);
+	                          } else {
+	                            console.log('Email sent: ' + info.response);
+	                          }
+	                        });
+	                        req.flash("success", "Serviceprovider Sucessfully Created")
+	                        res.redirect('/deletereq'+ myid);
+	                      }
+	                    })         
+	                  
+	                }
+
+	      });		
+
+	})
+
+})
+
+// ================ Delete Request (Middle Route) If Accepted ===================
+
+router.get("/deletereq:id",middleware.checkIfAdmin, function(req, res){
+        var myid = req.params.id;
+        res.render("deletepage", {myid: myid})
+});
+
+
+// ================== Delete Request Route ======================================
+
+
+router.delete("/deleteserviceprovider:id", middleware.checkIfAdmin, function(req, res){
+   Serviceproviderrequest.findByIdAndRemove(req.params.id, function(err){
+      if(err){
+
+      	req.flash("error", "Try again Later !!!")
+        res.redirect("back");
+      } else{
+      	res.redirect("/requests");
+      }
+      // req.flash("success", "Sucessfully deleted a Request");
+   }); 
+});
+
+
+// ======================= Middle stage to choose services ======================
+
+
+
+
+
 
 // router.post("/becomeserviceprovider", function(req, res){
 //     var username = req.body.email;

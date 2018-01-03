@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		function myfunc(){
+			document.getElementById("deletebutton").click();
+		}
+	</script>
+<style type="text/css">
+#deletebutton{
+	background: transparent;
+	border: none !important;
+	font-size: 0; 
+}
+</style>
+</head>
+<body onload = "myfunc()">
+	<form style = "display: inline;" action = "/deleteserviceprovider<%= myid %>?_method=delete" method = "post">
+        <input type = "submit" value = "Decline" class = "btn btn-xs btn-danger" id = "deletebutton">
+    </form>
+</body>
+</html>

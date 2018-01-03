@@ -22,4 +22,12 @@ middlewareObj.checkIfAdmin = function(req, res, next){
     }
 };
 
+middlewareObj.checkIfServiceprovider = function(req, res, next){
+    if(req.user && req.user.companyname){
+        return next();
+    }
+    req.flash("error", "You dont have permissions ! Please Login with correct Email and Password");
+    res.redirect("/");  
+}
+
 module.exports = middlewareObj;
