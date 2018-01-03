@@ -180,6 +180,12 @@
 								<li><a href="/additems">Add Items</a></li>
 								<li><a href="/requests">Requests</a></li>
 						 <%	} %>
+
+						 <% if(currentUser&&currentUser.servicetype){ %>
+								<li><a href="/addservices<%= currentUser._id %>">Add Services</a></li>
+								<!-- <li><a href="/requests">Requests</a></li> -->
+						 <%	} %>
+
 						<div class="nav navbar-nav navbar-right">
                     		<% if(!currentUser){ %>
                     		<li>

@@ -62,12 +62,23 @@
 								<li><a href="/requests">Requests</a></li>
 
 			                <% } %> 
-							<%  if(currentUser){ %>
-								<div class="nav navbar-nav navbar-right">
-	    	    	            	<li><a href="#">Signed in as <%= currentUser.name %></a></li>
-					                <li><a href="/logout">Logout</a></li>
-	            				</div>	
-			            	<%	}  %>
+
+			                 <% if(currentUser&&currentUser.servicetype){ %>
+									<li><a href="/addservices<%= currentUser._id %>" class = "act">Add Services</a></li>
+							 <%	} %>
+
+						<div class="nav navbar-nav navbar-right">
+							<% if(currentUser&&currentUser.companyname){ %>
+			                    <li><a href="#">Signed in as <%= currentUser.companyname %></a></li>
+			                	<li><a href="/logout">Logout</a></li> 
+			              	<% } %>
+
+			              	<% if(currentUser&&currentUser.name){ %>
+			                    <li><a href="#">Signed in as <%= currentUser.name %></a></li>
+			                    <li><a href="/logout">Logout</a></li>                 
+			              	<% } %>
+			            </div>
+
 
 					</ul>
 				</div>
@@ -93,28 +104,57 @@
         <h3 class = "display-3">We Currently deal with following services in <%= servicetype %> </h3>
 	</div>  
 </div>
+<% if(items.length===0){ %>
+	<div class="container">
+		<div class = "jumbotron">
+			<h4 class = "display-3">We are sorry services are currently unavailable in <%= servicetype %> </h4>
+		</div>  
+	</div>
+<% } %>
 
-<div class="container">
-	<div class = "jumbotron">
-        <% if(items.length>0){ %>
-        <form>	
-        	<% items.forEach(function(item){ %>
-	            <input type="checkbox" />
-	            <label><%= item.servicename %></label>
-	            <br/>
+<div class = "row">
+	<div class = "container">
+<% if(items.length>0){ %>
+	<% items.forEach(function(item){ %>
 
-	        <% }) %>
-	    </form>    
-    	<% } %>
 
-        <% if(items.length===0){ %>
-        	<h4 class = "display-3">We are sorry services are currently unavailable in <%= servicetype %> </h4>
-        <% } %>
+<div class="col-md-3">
 
-	</div>  
+	<div class = "thumbnail spthumbnail">
+        <img src = "<%= item.url %>">
+            <div class="caption">
+    			<h5><a href="<%=  %>"><%= item.servicename %></a></h5>            
+            </div>
+	
+	<% if(currentUser&& currentUser.ownername ){ %>
+		<div class="simpleCart_shelfItem">	
+
+<!-- 		<% if(item.subitems.length>=1){ %>	
+		  <a href="<%=  %>" class="w3ls-cart btn btn-default btn-xs">Add Subitem</a>
+		  <a href="/url" class="w3ls-cart btn btn-danger btn-xs">This item has subitems</a>
+
+		<% } %>
+ -->
+<!-- 		<% if(item.subitems.length<=0){ %>	
+		  <a href="<%=  %>" class="w3ls-cart btn btn-default btn-xs">Add Service</a>
+		  <a href="" class="w3ls-cart btn btn-default btn-xs">Generate Form</a>
+
+		<% } %>
+
+		<% if(item.issues.length>=1){ %>	
+		  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+		  <a href="#" class="w3ls-cart btn btn-danger btn-xs">Item has form</a>
+
+		<% } %>
+ -->
+		</div>
+    <% } %>						               
+    </div>
 </div>
-
-        
+	<% }) %>	        
+ <% } %>
+ </div>			
+</div>        
 
 </body>
 </html>	

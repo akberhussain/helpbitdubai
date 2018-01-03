@@ -26,7 +26,7 @@ middlewareObj.checkIfServiceprovider = function(req, res, next){
     if(req.user && req.user.companyname){
         return next();
     }
-    req.flash("error", "You dont have permissions ! Please Login with correct Email and Password");
+    req.flash("error", "You dont have access permissions !");
     res.redirect("/");  
 }
 

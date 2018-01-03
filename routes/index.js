@@ -516,7 +516,18 @@ router.delete("/deleteserviceprovider:id", middleware.checkIfAdmin, function(req
 
 // ======================= Middle stage to choose services ======================
 
-
+router.get("/addservices:id", middleware.checkIfServiceprovider , function(req, res){
+    Serviceprovider.findById(req.params.id, function(err, serviceprovider){
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        } else{
+            Item.find({itemtype: serviceprovider.servicetype}, function(err, items){
+                res.render("chooseservices", {items: items, servicetype: serviceprovider.servicetype});
+            })
+        }
+    });
+});
 
 
 
