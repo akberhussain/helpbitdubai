@@ -11,16 +11,16 @@
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <!-- Custom Theme files -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //Custom Theme files -->
 <!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
+<link href="../css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <!-- js -->
-<script src="js/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown --> 
 <!-- //js -->  
 <!-- web fonts --> 
@@ -88,22 +88,46 @@
       <% } %>
 </div>	
 
+<div class = "jumbotron">
+	<div class = "container">
+		<h3 class="display-3">You can add your services to following in <%= item.servicename %></h3>
+	</div>
+</div>
+
+<% if(item.subitems.length===0){ %>
+	<div class="container">
+		<div class = "jumbotron">
+			<h4 class = "display-3">We are sorry services are currently unavailable in <%= item.servicename %> </h4>
+		</div>  
+	</div>
+<% } %>
+
+<% if(item.subitems.length>0){ %>
 
 <% item.subitems.forEach(function(subitem){ %>	
-	<a href = "/services<%= item._id %>/subitem<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
-	<br/>
-		<% if(currentUser&&(currentUser.id== admin )){ %>
+	<!-- <a href = "/services<%= item._id %>/subitem<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
+	<br/> -->
+		<!-- <% if(currentUser&&(currentUser.id== admin )){ %>
 			<a href="/addissuestoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Issues</a>
 			<br />
-		<% } %>
+		<% } %> -->
 
-		<!-- <% if(currentUser&& currentUser.servicetype){ %>
-			<a href="/addservicetoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Service</a>
-			<br />
-		<% } %>  -->	
+
+
+		<% if(currentUser&& currentUser.servicetype){ %>
+			<%	if(subitem.item.itemtype===serviceprovider.servicetype){ %>
+				<!-- <a href="/addservicetoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Service</a>
+				<br /> -->
+					<a href = "/addservicetoitem<%= item._id %>/<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
+					<br/>
+			<%	} %>
+		<% } %> 	
 
 
 <% }) %>
+
+<% } %>
+
 
 </body>
 </html>	

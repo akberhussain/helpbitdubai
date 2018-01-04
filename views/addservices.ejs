@@ -11,16 +11,16 @@
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
 <!-- Custom Theme files -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //Custom Theme files -->
 <!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
+<link href="../css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <!-- js -->
-<script src="js/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/jquery.countdown.css" /> <!-- countdown --> 
 <!-- //js -->  
 <!-- web fonts --> 
@@ -58,25 +58,36 @@
 					<ul class="nav navbar-nav">
 						<li><a href="/">Home</a></li>
 						 <% if(currentUser&&(currentUser.id== admin )){ %>
-								<li><a href="/additems">Add Items</a></li>
+								<li><a href="/additems" class="">Add Items</a></li>
 								<li><a href="/requests">Requests</a></li>
 
 			                <% } %> 
-							<%  if(currentUser){ %>
-								<div class="nav navbar-nav navbar-right">
-	    	    	            	<li><a href="#">Signed in as <%= currentUser.name %></a></li>
-					                <li><a href="/logout">Logout</a></li>
-	            				</div>	
-			            	<%	}  %>
+
+			                 <% if(currentUser&&currentUser.servicetype){ %>
+									<li><a href="/addservices<%= currentUser._id %>" class = "act">Add Services</a></li>
+							 <%	} %>
+
+						<div class="nav navbar-nav navbar-right">
+							<% if(currentUser&&currentUser.companyname){ %>
+			                    <li><a href="#">Signed in as <%= currentUser.companyname %></a></li>
+			                	<li><a href="/logout">Logout</a></li> 
+			              	<% } %>
+
+			              	<% if(currentUser&&currentUser.name){ %>
+			                    <li><a href="#">Signed in as <%= currentUser.name %></a></li>
+			                    <li><a href="/logout">Logout</a></li>                 
+			              	<% } %>
+			            </div>
+
 
 					</ul>
 				</div>
 			</nav>
 		</div>
 	</div>
-
+	<!-- /Navigation -->
 <div class="container">
-	<% if (error && error.length > 0){ %>
+    <% if (error && error.length > 0){ %>
         <div class = "alert alert-danger">
           <%= error %>
         </div>
@@ -86,24 +97,44 @@
           <%= success %>
         </div>
       <% } %>
-</div>	
+</div>
 
+<div class="jumbotron">
+	<div class = "container">
+        <h3 class = "display-3">We Currently deal with following services in <%= subitem.name %> </h3>
+	</div>  
+</div>
+<% if(subitem.issues.length===0){ %>
+	<div class="container">
+		<div class = "jumbotron">
+			<h4 class = "display-3">We are sorry services are currently unavailable in <%= subitem.name %> </h4>
+		</div>  
+	</div>
+<% } %>
 
-<% item.subitems.forEach(function(subitem){ %>	
-	<a href = "/services<%= item._id %>/subitem<%= subitem._id %>" class = "btn btn-lg btn-primary" style = "margin-top: 20px;"><%= subitem.name %></a>
-	<br/>
-		<% if(currentUser&&(currentUser.id== admin )){ %>
-			<a href="/addissuestoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Issues</a>
-			<br />
-		<% } %>
-
-		<!-- <% if(currentUser&& currentUser.servicetype){ %>
-			<a href="/addservicetoitem<%= item._id %>/<%= subitem._id %>" class = 'btn btn-xs btn-primary'>Add Service</a>
-			<br />
-		<% } %>  -->	
-
-
-<% }) %>
+<% if(subitem.issues.length>0){ %>
+	<div class = "row">
+		<div class = "container">
+		<div class = "jumbotron">	
+		<div class = "container">
+			<% if(currentUser&& currentUser.servicetype){ %>
+				<%	if(subitem.item.itemtype===serviceprovider.servicetype){ %>
+						<h4 class="display-3">You can add your services in following Issues</h4>
+						<form>
+							<% subitem.issues.forEach(function(issue){ %>
+							 	<input type="radio" name = "issues" value ="<%= issue %>" />
+							 	<label><%= issue.issue %></label>
+							 	<br /> 
+							<% }) %>
+							<input type="submit" value="Add" class ="btn btn-success">
+						</form>						
+				<%	} %>
+			<% } %> 	
+		</div>
+		</div>
+		</div>			
+	</div>        
+<% } %>
 
 </body>
 </html>	

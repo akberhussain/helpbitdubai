@@ -15,7 +15,8 @@ var subitemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
        },
-       itemname: String  
+       itemname: String,
+       itemtype: String  
     },
     issues: [issuesSchema]
 })

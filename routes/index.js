@@ -216,7 +216,8 @@ router.post("/addsubitemto:id", middleware.checkIfAdmin, function(req, res){
         var name = req.body.subitem;
         var myitem = {
             itemid : item._id,
-            itemname: item.servicename
+            itemname: item.servicename,
+            itemtype: item.itemtype
         };
         var obj = {
             name: name,
@@ -308,7 +309,8 @@ router.post("/addissuesto:itemId/subitem:subitemId", middleware.checkIfAdmin, fu
     })
 });
 
-//  Show issues on subitem
+// ======================  Show issues on subitem ==============================
+
 
 router.get("/services:itemId/subitem:subitemId", function(req, res){
     Item.findById(req.params.itemId, function(err, item){
@@ -517,7 +519,7 @@ router.delete("/deleteserviceprovider:id", middleware.checkIfAdmin, function(req
 // ======================= Middle stage to choose services ======================
 
 router.get("/addservices:id", middleware.checkIfServiceprovider , function(req, res){
-    Serviceprovider.findById(req.params.id, function(err, serviceprovider){
+    Serviceprovider.findById(req.user._id, function(err, serviceprovider){
         if(err){
             console.log(err);
             res.redirect("back");
@@ -530,7 +532,50 @@ router.get("/addservices:id", middleware.checkIfServiceprovider , function(req, 
 });
 
 
+router.get("/addserviceto:Itemid/from:Providerid", middleware.checkIfServiceprovider , function(req, res){
+    Serviceprovider.findById(req.params.Providerid, function(err, serviceprovider){
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        } else{
+            Item.findById(req.params.Itemid, function(err, founditem){
+                if(err){
+                    console.log(err);
+                    res.redirect("back");
+                } else{
+                            // res.send(subitems);
+                    res.render("showissues", {item: founditem, serviceprovider: serviceprovider});                      
+                }
+            })
+        }
+    });
+});
 
+
+router.get("/addservicetoitem:itemId/:subitemId", middleware.checkIfServiceprovider , function(req, res){
+    Item.findById(req.params.itemId, function(err, item){
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        } else{
+            Subitem.findById(req.params.subitemId, function(err, subitem){
+                if(err){
+                    console.log(err);
+                    res.redirect("back");
+                } else{
+                    Serviceprovider.findById(req.user._id, function(err, serviceprovider){
+                        if(err){
+                            console.log(err);
+                            res.redirect("back");
+                        } else{
+                            res.render("addservices", {item: item, subitem: subitem, serviceprovider: serviceprovider});
+                        }
+                    });
+                }
+            })
+        }
+    });
+});
 
 // router.post("/becomeserviceprovider", function(req, res){
 //     var username = req.body.email;
